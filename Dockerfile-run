@@ -1,5 +1,7 @@
 FROM python:3
 
+RUN ["apt-get", "update"]
+
 COPY requirements.txt ./
 COPY test-proj ./test-proj
 RUN pip install --no-cache-dir -r requirements.txt
