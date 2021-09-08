@@ -1,13 +1,20 @@
-import datetime  
+import time
+from datetime import datetime, date, time, timedelta
 
 class Maxprofit(object):
 
     def __init__(self):
-        self._max_diff = 0
+        self._profit = 0
+    #endDef
 
-    def calculate_max_profit(self, stock_prices):
+
+    #############################################################
+    # Returns an Array [<buy_time>,<sell_time>,<profit>]
+    #############################################################
+    def get_max_profit(self, stock_prices):
+        # Initialize
         arr_size = len(stock_prices)
-        max_diff = stock_prices[1] - stock_prices[0]
+        profit = stock_prices[1] - stock_prices[0]
         min_element = stock_prices[0]
         min_element_pos = 0
         max_element_pos = 0
@@ -15,55 +22,41 @@ class Maxprofit(object):
         # Loop through starting from 2nd element
         for i in range( 1, arr_size ):
             
-            if (stock_prices[i] - min_element > max_diff):
-                max_diff = stock_prices[i] - min_element
+            if (stock_prices[i] - min_element > profit):
+                profit = stock_prices[i] - min_element
                 max_element_pos = i + 1
         
             if (stock_prices[i] < min_element):
                 min_element = stock_prices[i]
                 min_element_pos = i + 1
-                
         #endFor
-        return min_element_pos,max_element_pos,max_diff
+
+        # Get the trade buy and sell times
+        buy_time = self.get_trade_time(min_element_pos)
+        sell_time = self.get_trade_time(max_element_pos)
+
+        return [buy_time,sell_time,profit]
     #endDef
 
-    def get_yesterday_date(self):
-        yesterday = datetime.date.today () - datetime.timedelta (days=1)
-        t = datetime.time(hour=23, minute=30)
-        print(datetime.datetime.combine(yesterday, t))        
+
+    #############################################################
+    # Returns the trade time as a timestamp
+    #############################################################
+    def get_trade_timestamp(self, pos):
+        yesterday = date.today() - timedelta(days = 1)
+        open_trade_time = time(hour=10, minute=00)
+        open_trade_yesterday = datetime.combine(yesterday, open_trade_time)
+
+        trade_time = open_trade_yesterday + timedelta(minutes=pos)
+        return(trade_time)
     #endDef
 
-    def get_buy_time(self, pos):
-        # yesterday = datetime.date.today () - datetime.timedelta (days=1)
-        open_trade_yesterday = datetime.time(day=-1, hour=10, minute=00)
-        final_time = given_time + timedelta(minutes=n)
-        final_time_str = final_time.strftime('%d/%m/%Y %H:%M:%S.%f')
-        print("DEREK 1")
-        print (final_time_str)
-        return final_time_str
+
+    #############################################################
+    # Returns the trade time as a string HH:MM
+    #############################################################
+    def get_trade_time(self, pos):
+        trade_time = self.get_trade_timestamp(pos)
+        time_str = str(trade_time.hour).zfill(2) + ":" + str(trade_time.minute).zfill(2)
+        return time_str
     #endDef
-
-    def get_sell_time(self, pos, stock_prices):
-        return stock_prices(pos)
-    #endDef
-
-    def get_max_profit(self, stock_prices):
-        min_element_pos,max_element_pos,max_profit = self.calculate_max_profit(stock_prices)
-        print "derek 1 " + str(min_element_pos)
-        print "derek 2 " + str(max_element_pos)
-        print "derek 3 " + str(max_profit)
-        buy_time = self.get_buy_time(min_element_pos)
-        return max_profit
-    #endDef
-
-# get_max_profit(stock_prices_yesterday)
-# returns 6 (buying for $5 and selling for $11)
-
-# # Driver program to test above function
-# stock_prices_yesterday = [10, 5, 6, 18, 10, 22, 5, 22]
-# # size = len(prices)
-# print ("Maximum difference is",
-#         get_max_profit(stock_prices_yesterday))
-
-
-# # get_max_profit(stock_prices_yesterday)
