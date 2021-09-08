@@ -5,4 +5,4 @@ RUN ["apt-get", "install", "-y", "vim"]
 
 COPY src ./
 
-CMD [/latitude/testit.sh]
+CMD ["/latitude/testit.sh"]
