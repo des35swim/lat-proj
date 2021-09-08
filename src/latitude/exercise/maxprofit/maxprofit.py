@@ -7,6 +7,18 @@ class Maxprofit(object):
         self._profit = 0
     #endDef
 
+    def main(self, file_path):
+        text_file = open(file_path, "r")
+        stock_prices_yesterday = text_file.read().strip().split(',')
+        for i in range(0, len(stock_prices_yesterday)):
+            stock_prices_yesterday[i] = int(stock_prices_yesterday[i])
+        #endFor
+
+        maxprof = Maxprofit()
+        value = maxprof.get_max_profit(stock_prices_yesterday)
+        print (value)
+    #endDef
+
 
     #############################################################
     # Returns an Array [<buy_time>,<sell_time>,<profit>]
