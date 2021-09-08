@@ -1,5 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
-current_dir=`dirname $0`
-cd ${current_dir}/exercise/maxprofit
+cd /latitude/exercise/maxprofit
 python -m unittest discover
